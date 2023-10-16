@@ -3,19 +3,19 @@
 class SortList {
 
     // wrapper > ul > li 형태
-    setting(targetWrapper){
+    setting(targetWrapper, valueName){
         this.wrapper = document.querySelector("#"+targetWrapper);
-        this.initWrapper("ul", "li");
+        this.initWrapper("ul", "li", valueName);
     }
 
-    // 직접 클래스명으로 부여
-    setting(targetWrapper, box, item){
+    settingBox(targetWrapper, box, item, valueName) {
         this.wrapper = document.querySelector("#"+targetWrapper);
-        this.initWrapper("."+box, "."+item)
+        this.initWrapper(`.${box}`, `.${item}`, valueName);
     }
 
-    initWrapper(box, item) {
+    initWrapper(box, item, valueName) {
         const that = this;
+
         that.dragUl = that.wrapper.querySelector(box);
         that.dragUl.classList.add("drag-box");
         that.dragItem = that.wrapper.querySelectorAll(box+" "+item);
@@ -23,12 +23,12 @@ class SortList {
         that.dragUl.addEventListener("dragover", (event) => {
             event.preventDefault();
 
-            const dragTargetItem = that.wrapper.querySelector(".dragging");
-            let siblings = [...that.dragUl.querySelectorAll(".drag-item:not(.dragging)")];
+            const dragTargetItem = event.target.parentNode.querySelector(".dragging");
+            let siblings = [...event.target.parentNode.querySelectorAll(".drag-item:not(.dragging)")];
             let nextSibling = siblings.find(sibling => {
                 return event.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
             });
-            this.dragUl.insertBefore(dragTargetItem, nextSibling);
+            event.target.parentNode.insertBefore(dragTargetItem, nextSibling);
         });
         that.dragUl.addEventListener("dragenter", (event) => event.preventDefault());
 
@@ -41,15 +41,15 @@ class SortList {
             });
             item.addEventListener("dragend", (event) => {
                 item.classList.remove("dragging");
-                that.sortArray();
+                that.sortArray(event.target.parentNode, valueName);
             });
         });
     }
 
-    sortArray() {
+    sortArray(ul, valueName) {
         let sortArray = [];
-        this.wrapper.querySelectorAll(".drag-item").forEach(item => {
-            sortArray.push(item.querySelector("input[name=idx]").value);
+        ul.querySelectorAll(".drag-item").forEach(item => {
+            sortArray.push(item.querySelector(`input[name=${valueName}]`).value);
         });
         console.log(sortArray);
     }

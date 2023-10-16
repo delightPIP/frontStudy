@@ -71,6 +71,32 @@
             </li>
         </ul>
     </div>
+
+
+    <div id="drag-div">
+        <div class="div-box list-group">
+            <div class="div-item list-group-item">
+                <input type="hidden" name="test" value="1">
+                test1
+            </div>
+            <div class="div-item list-group-item">
+                <input type="hidden" name="test" value="2">
+                test2
+            </div>
+            <div class="div-item list-group-item">
+                <input type="hidden" name="test" value="3">
+                test3
+            </div>
+            <div class="div-item list-group-item">
+                <input type="hidden" name="test" value="4">
+                test4
+            </div>
+            <div class="div-item list-group-item">
+                <input type="hidden" name="test" value="5">
+                test5
+            </div>
+        </div>
+    </div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -81,7 +107,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         dragFile.setting("upload-wrapper");
-        // sortUl.setting("drag-div", "item-box", "item");
+        sortUl.setting("drag-wrapper", "idx");
+        sortUl.settingBox("drag-div", "div-box", "div-item", "test");
     });
 </script>
 </body>
