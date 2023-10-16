@@ -1,0 +1,12 @@
+.upload-div {
+    margin: 10px;
+    width: 40%;
+    height: 200px;
+    border: 1px solid darkgray;
+    box-shadow: 2px 2px 2px hsl(0, 0%, 47%);
+    padding: 10px;
+}
+
+.upload-div > .upload-file {
+    display: none;
+}

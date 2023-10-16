@@ -1,0 +1,15 @@
+#drag-wrapper .drag-box .drag-item {
+    display: flex;
+    cursor: move;
+    background: white;
+    align-items: center;
+}
+
+#drag-wrapper .drag-item.dragging {
+    opacity: 0.6;
+    background: lightslategray;
+}
+
+#drag-wrapper .drag-item.dragging :where(.details, i) {
+    opacity: 0;
+}
