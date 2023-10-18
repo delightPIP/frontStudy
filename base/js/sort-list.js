@@ -3,7 +3,7 @@
 class SortList {
 
     // wrapper > ul > li 형태
-    setting(targetWrapper, valueName){
+    settingList(targetWrapper, valueName){
         this.wrapper = document.querySelector("#"+targetWrapper);
         this.initWrapper("ul", "li", valueName);
     }
@@ -24,11 +24,16 @@ class SortList {
             event.preventDefault();
 
             const dragTargetItem = event.target.parentNode.querySelector(".dragging");
-            let siblings = [...event.target.parentNode.querySelectorAll(".drag-item:not(.dragging)")];
-            let nextSibling = siblings.find(sibling => {
-                return event.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
-            });
-            event.target.parentNode.insertBefore(dragTargetItem, nextSibling);
+
+            if(dragTargetItem !== null) {
+                let siblings = [...event.target.parentNode.querySelectorAll(".drag-item:not(.dragging)")];
+                let nextSibling = siblings.find(sibling => {
+                    return event.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+                });
+                event.target.parentNode.insertBefore(dragTargetItem, nextSibling);
+            }else{
+                console.log("다른영역에서 dragover");
+            }
         });
         that.dragUl.addEventListener("dragenter", (event) => event.preventDefault());
 
@@ -41,7 +46,11 @@ class SortList {
             });
             item.addEventListener("dragend", (event) => {
                 item.classList.remove("dragging");
-                that.sortArray(event.target.parentNode, valueName);
+                if(event.target.parentNode.querySelector(".dragging") !==null) {
+                    that.sortArray(event.target.parentNode, valueName);
+                }else{
+                    console.log("다른영역에서 끝");
+                }
             });
         });
     }
